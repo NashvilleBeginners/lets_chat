@@ -22,6 +22,7 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 ## Ubuntu 16.04 Installation Help
 
   * 16.04 has an old version of Elixir in the repos, install Elixir using the official Elixir instructions: http://elixir-lang.org/install.html#unix-and-unix-like
+  * Install latest nodejs from PPA: https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04
   * Helpful link about database setup: http://blog.plataformatec.com.br/2016/05/how-to-config-environment-variables-with-elixir-and-exrm/
   * If you need to change your postgres user password: https://help.ubuntu.com/community/PostgreSQL
   * If your postgres locale is wrong: http://askubuntu.com/questions/162391/how-do-i-fix-my-locale-issue and https://makandracards.com/makandra/18643-how-the-change-the-locale-of-a-postgresql-cluster
