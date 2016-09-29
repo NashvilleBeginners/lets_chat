@@ -22,10 +22,6 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-config :phoenix, :generators,
-        migration: true,
-        binary_id: true
-
 config :ueberauth, Ueberauth,
   providers: [
     github: { Ueberauth.Strategy.Github, [ default_scope: "user" ] }
@@ -37,4 +33,9 @@ config :ueberauth, Ueberauth.Strategy.Github.OAuth,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
+
+config :phoenix, :generators,
+        migration: true,
+        binary_id: true
+
 import_config "#{Mix.env}.exs"

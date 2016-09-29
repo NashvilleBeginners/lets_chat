@@ -70,11 +70,21 @@ exports.config = {
       allowCache: true,
       sourceMapEmbed: true,
       options: {
-        includePaths: ['node_modules/materialize-css/sass/']
+        includePaths: [
+          'node_modules/materialize-css/sass/',
+          'node_modules/mdi/scss'
+        ]
       }
     },
 
     brunchTypescript: {
+    },
+
+    copycat: {
+      "fonts": [
+        'node_modules/materialize-css/fonts/',
+        'node_modules/mdi/fonts'
+      ]
     }
   },
 

@@ -27,6 +27,7 @@ defmodule LetsChat.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/*path", PageController, :index
   end
 
   defp put_user_token(conn, _) do
