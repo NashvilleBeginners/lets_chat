@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Location} from '@angular/common';
 
 @Component({
     selector: 'navbar',
     template: `
       <ul id="nav-mobile" class="side-nav fixed">
+        <h2>Hello, {{username}}</h2>
         <li>
           <a [routerLink]="['']" [class.active]="isActive('/')">Home</a>
         </li>
@@ -15,6 +16,7 @@ import {Location} from '@angular/common';
   `
 })
 export class NavBarComponent {
+    @Input() username: string = "";
     constructor(public loc: Location) {}
 
     isActive(path: string) {

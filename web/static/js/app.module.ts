@@ -11,6 +11,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import "materialize-css";
 import { SocketService } from './services/socket.service';
 import {AppComponent} from './app/app.component';
+import {DataService} from "./services/data.service";
 
 @NgModule({
     imports: [
@@ -27,7 +28,7 @@ import {AppComponent} from './app/app.component';
         Login,
         NavBarComponent
     ],
-    providers: [SocketService],
+    providers: [SocketService, DataService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

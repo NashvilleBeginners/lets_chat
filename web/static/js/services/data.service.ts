@@ -2,26 +2,32 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import { Subject }    from 'rxjs/Subject';
 
-interface ChannelDetails {
-    messages: Subject<string[]>,
-    messsageCount: Subject<number>
+export interface RoomDetails {
+    messages: Subject<string>,
+    messageCount: Subject<number>
 }
 
-interface ChannelData {
-    [index: string]: ChannelDetails
+export interface RoomData {
+    [channelId: string]: RoomDetails
 }
+
 
 @Injectable()
 export class DataService {
-    channelData: ChannelData;
+    roomData: RoomData;
+    username: Subject<string>;
 
     constructor() { }
 
-    public receiveAlertMessage(message: string) {
-        this.alertMessage$.next(message);
+    public receiveMessage(channelId: string, message: string) {
+        this.roomData[channelId].messages.next(message);
     }
 
-    public setCurrentCount(count: number) {
-        this.currentCount$.next(count);
+    public setMessageCount(channelId: string, count: number) {
+        this.roomData[channelId].messageCount.next(count);
+    }
+
+    public receiveUser(username: string) {
+        this.username.next(username);
     }
 }
