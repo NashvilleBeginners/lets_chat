@@ -17,9 +17,21 @@ defmodule LetsChat.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {LetsChat, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+    [
+      mod: {LetsChat, []},
+      applications: [
+        :phoenix,
+        :phoenix_pubsub,
+        :phoenix_html,
+        :cowboy,
+        :logger,
+        :gettext,
+        :phoenix_ecto,
+        :postgrex,
+        :ueberauth,
+        :ueberauth_github
+      ]
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +50,9 @@ defmodule LetsChat.Mixfile do
       {:phoenix_html, "~> 2.6"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:ueberauth, "~> 0.4"},
+      {:ueberauth_github, "~> 0.4"}
     ]
   end
 
