@@ -11,13 +11,21 @@ export interface RoomData {
     [channelId: string]: RoomDetails
 }
 
-
 @Injectable()
 export class DataService {
     roomData: RoomData;
-    username: Subject<string>;
+    public username: Subject<string>;
+    public rooms: Subject<[string]>;
 
-    constructor() { }
+    constructor() {
+        this.rooms = new Subject<[string]>();
+        this.roomData = {};
+        this.username = new Subject<string>();
+    }
+
+    public receiveRooms(rooms: [string]) {
+        this.rooms.next(rooms);
+    }
 
     public receiveMessage(channelId: string, message: string) {
         this.roomData[channelId].messages.next(message);

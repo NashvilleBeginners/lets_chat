@@ -1,10 +1,11 @@
-<div class="container">
-  <div class="row">
-    <div class="col s12 m4 l3">
-      <navbar [username]="username"></navbar>
-    </div>
-    <div class="col s12 m8 l9">
-      <router-outlet></router-outlet>
+<navbar [username]="username" [rooms]="rooms"></navbar>
+
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
-</div>
+</main>

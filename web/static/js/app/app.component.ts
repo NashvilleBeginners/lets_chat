@@ -9,9 +9,15 @@ import {DataService} from "../services/data.service";
 })
 export class AppComponent {
     username: string;
+    rooms: [string] = [];
 
-    constructor(private socketService: SocketService, private dataService: DataService) {
-        this.socketService = socketService;
+    constructor(public socketService: SocketService, public dataService: DataService) {
+        this.socketService.connect(window.userToken).subscribe(() => {
+            this.socketService.sendWhoAmI();
+            this.socketService.sendGetRooms();
+        });
+
         this.dataService.username.subscribe(username => this.username = username);
+        this.dataService.rooms.subscribe(rooms => this.rooms = rooms);
     }
 }

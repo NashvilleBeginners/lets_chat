@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'home',
@@ -7,11 +8,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export default class HomeComponent implements OnInit {
     public title: any;
-    constructor() {
+    public room: string;
+    constructor(private route: ActivatedRoute) {
         this.title = { value: 'Angular 2' };
+        this.route.params.subscribe((params) => this.room = params.room)
     }
 
     ngOnInit() {
-        console.log('Hello Home component');
     }
 }

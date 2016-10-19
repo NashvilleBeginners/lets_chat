@@ -23,7 +23,8 @@ defmodule LetsChat.User do
   end
 
   def find_or_create(%Auth{} = auth) do
-    Repo.one(from u in User, where: u.email == ^auth.info.email) || %User{}
+    user = Repo.one(from u in User, where: u.email == ^auth.info.email) || %User{}
+    user
     |> changeset(basic_info(auth))
     |> Repo.insert_or_update
   end

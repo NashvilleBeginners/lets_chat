@@ -7,19 +7,16 @@ import {Location} from '@angular/common';
       <ul id="nav-mobile" class="side-nav fixed">
         <h2>Hello, {{username}}</h2>
         <li>
-          <a [routerLink]="['']" [class.active]="isActive('/')">Home</a>
+          <a routerLink="/rooms/lobby" routeLinkActive="active">Lobby</a>
         </li>
-        <li>
-          <a [routerLink]="['about']" [class.active]="isActive('/about')">About</a>
+        <li *ngFor="let room of rooms">
+          <a routerLink="/rooms/{{room}}" routerLinkActive="active">{{room}}</a>
         </li>
       </ul>
   `
 })
 export class NavBarComponent {
     @Input() username: string = "";
+    @Input() rooms: [string] = [];
     constructor(public loc: Location) {}
-
-    isActive(path: string) {
-        return (this.loc.path() || '/') === path;
-    }
 }

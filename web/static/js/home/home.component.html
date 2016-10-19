@@ -1,5 +1,12 @@
-<div>
-  <div>Your Content Here</div>
-  <input type="text" [(ngModel)]="title.value">
-  <pre>this.test = {{ title | json }}</pre>
+<div>{{room}}</div>
+<input type="text" [(ngModel)]="title.value">
+<pre>this.test = {{ title | json }}</pre>
+<div id="chat-input">
+  <div class="row">
+    <div class="col s12">
+      <div class="input-field">
+        <input class="validate" type="text" #message (keyup.enter)="sendMessage(message.value)" />
+      </div>
+    </div>
+  </div>
 </div>

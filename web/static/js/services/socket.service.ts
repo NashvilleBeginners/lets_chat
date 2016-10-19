@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription} from 'rxjs/Observable';
 import { Socket, Channel, SocketOptions } from 'phoenix';
 import {DataService} from "./data.service";
+
+export interface Channels {
+    [channelId: string]: Channel
+}
 
 @Injectable()
 export class SocketService {
 
     socket: Socket;
+    channels: Channels;
 
-    constructor(private dataService: DataService, private router: Router) {
+    constructor(public dataService: DataService, private router: Router) {
+        this.channels = {};
     }
 
     connect(token: string): Observable<any> {
@@ -34,42 +40,45 @@ export class SocketService {
             });
 
             this.socket.connect();
-        }).flatMap(() => this.joinChannel('room:lobby'))
+        }).flatMap(() => this.joinChannel('room:lobby'));
     }
 
     joinChannel(channelId: string): Observable<any> {
-        let channel: Channel = this.socket.channel(channelId, {});
-        let dataService = this.dataService;
+        let channel: Channel;
 
-        return Observable.create(function (observer) {
-            channel.on('new_message', payload => {
-                dataService.receiveMessage(channelId, payload.body);
-            });
-
-            channel.on('current_count', payload => {
-                dataService.setMessageCount(channelId, payload.body);
-            });
-
-            channel.on('whoami', payload => {
-                dataService.receiveUser(payload.body);
-            });
-
-            channel.join()
-                .receive('ok', resp => {
-                    console.log(resp);
-                })
-                .receive('error', err => {
-                    return observer.error(err);
-                });
+        return Observable.create(o => {
+            if(this.channels[channelId]) {
+                channel = this.channels[channelId];
+            } else {
+                channel = this.socket.channel(channelId);
+                this.channels[channelId] = channel;
+                channel.join()
+                    .receive('ok', () => o.next())
+                    .receive('error', err => o.error(err));
+            }
         });
+    }
 
+    sendWhoAmI() {
+       this.sendMessage("room:lobby", "whoami", "")
+            .filter(r => { return r.username })
+            .pluck("username")
+            .subscribe(username => {
+                this.dataService.receiveUser(username)
+            });
+    }
+
+    sendGetRooms() {
+        this.sendMessage("room:lobby", "get_rooms", "")
+            .pluck("rooms")
+            .subscribe(rooms => this.dataService.receiveRooms(rooms))
     }
 
     sendMessage(channelId: string, messageType: string, body: string): Observable<any> {
-        let channel = this.socket.channel(channelId, {});
+        let channel = this.channels[channelId];
         return Observable.create(function (observer) {
             channel.push(messageType, { body: body}, 10000)
-                .receive('ok', (msg) => { observer.next(msg.body); })
+                .receive('ok', (msg) => { observer.next(msg); })
                 .receive('error', resp => { Observable.throw(new Error(resp)); });
         });
     }

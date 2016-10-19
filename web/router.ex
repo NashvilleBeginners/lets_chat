@@ -7,6 +7,14 @@ defmodule LetsChat.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :secure do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
     plug :put_user_token
   end
 
@@ -24,7 +32,7 @@ defmodule LetsChat.Router do
   end
 
   scope "/", LetsChat do
-    pipe_through :browser # Use the default browser stack
+    pipe_through :secure # Use the default browser stack
 
     get "/", PageController, :index
     get "/*path", PageController, :index
@@ -35,7 +43,8 @@ defmodule LetsChat.Router do
       token = Phoenix.Token.sign(conn, "user socket", current_user.id)
       assign(conn, :user_token, token)
     else
-      conn
+      conn |>
+      Phoenix.Controller.redirect(to: "/auth/github")
     end
   end
 end

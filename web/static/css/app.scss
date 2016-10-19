@@ -1,3 +1,14 @@
 @import "materialize";
 @import "materialdesignicons";
 
+
+header, main, footer {
+  padding-left: 300px;
+}
+
+.container {
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
