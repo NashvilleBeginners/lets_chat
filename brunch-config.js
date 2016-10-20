@@ -2,10 +2,7 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: {
-        "js/app.js": /^(web\/static\/js)/,
-        "js/vendor.js": /^(node_modules)/
-      },
+      joinTo: "js/app.js",
       order: {
         before: [/process/, /reflect-metadata/],
         after: [/\.html$/, /\.css$/]

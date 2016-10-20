@@ -18,4 +18,21 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
+import socket from "./socket"
+
+(function() {
+  let $stage = document.getElementById('stage');
+  if ($stage === null) {
+    return;
+  }
+
+  const $input = document.getElementById('input');
+  const $send = document.getElementById('send');
+  let channel = socket.channel("rooms:lobby", {})
+
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+
+
+}).call(this);

@@ -1,2 +1,4 @@
-<div id="lobby">
+<div id="stage">
+  <input type="text" id="input" />
+  <input type="submit" id="send" value="Send" />
 </div>
