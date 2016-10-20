@@ -36,11 +36,20 @@ import socket from "./socket"
     .receive("error", resp => { console.log("Unable to join", resp) })
 
   $send.addEventListener("click", e => {
-    console.log('click')
     let payload = {body: $input.value};
     channel.push('new_msg', payload)
            .receive('error', e => console.log(e))
     $input.value = ''
+  })
+
+  $input.addEventListener('keyup', e => {
+    e.preventDefault();
+    if (e.keyCode == 13) {
+      let payload = {body: $input.value};
+      channel.push('new_msg', payload)
+            .receive('error', e => console.log(e))
+      $input.value = ''
+    }
   })
 
   channel.on("new_message", resp => {
