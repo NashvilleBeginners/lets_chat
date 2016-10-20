@@ -26,6 +26,7 @@ import socket from "./socket"
     return;
   }
 
+  const $msgContainer = document.getElementById('msg-container');
   const $input = document.getElementById('input');
   const $send = document.getElementById('send');
   let channel = socket.channel("rooms:lobby", {})
@@ -33,6 +34,31 @@ import socket from "./socket"
   channel.join()
     .receive("ok", resp => { console.log("Joined successfully", resp) })
     .receive("error", resp => { console.log("Unable to join", resp) })
+
+  $send.addEventListener("click", e => {
+    console.log('click')
+    let payload = {body: $input.value};
+    channel.push('new_msg', payload)
+           .receive('error', e => console.log(e))
+    $input.value = ''
+  })
+
+  channel.on("new_message", resp => {
+    console.log($msgContainer)
+    renderNewMessage($msgContainer, resp)
+  })
+
+  let renderNewMessage = function($el, {user, body}) {
+    let template = document.createElement("div")
+    template.innerHTML = `
+               <div>
+                  ${user}: ${body}
+               </div>
+             `
+    $el.appendChild(template)
+  }
+
+
 
 
 }).call(this);

@@ -1,4 +1,6 @@
 <div id="stage">
+  <div id="msg-container">
+  </div>
   <input type="text" id="input" />
   <input type="submit" id="send" value="Send" />
 </div>
