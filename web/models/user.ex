@@ -7,6 +7,7 @@ defmodule LetsChat.User do
     field :username, :string
     field :email, :string
     field :avatar, :string
+    has_many :messages, LetsChat.Message
 
     timestamps()
   end
