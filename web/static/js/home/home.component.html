@@ -12,8 +12,9 @@
     </ul>
   </div>
 </div>
-<div id="chat-input">
+
+<div id="chat-input" class="z-depth-2">
   <div class="input-field">
-    <input class="validate" type="text" [(ngModel)]="message" (keyup.enter)="sendMessage(message)" />
+    <input class="validate" type="text" [(ngModel)]="message" (keyup.enter)="sendMessage(message)" placeholder="Type here to leave a message" />
   </div>
 </div>
