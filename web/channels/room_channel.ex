@@ -8,7 +8,7 @@ defmodule LetsChat.RoomChannel do
   end
 
   def handle_in(event, params, socket) do
-    user = Repo.get(LetsChat.User, socket.assigns.user_id)
+    user = Repo.get(User, socket.assigns.user_id)
     handle_in(event, params, user, socket)
   end
 

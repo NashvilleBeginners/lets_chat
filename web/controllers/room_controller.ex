@@ -4,7 +4,6 @@ defmodule LetsChat.RoomController do
   plug :authenticate when action in [:lobby]
 
   def lobby(conn, params) do
-    # messages = Repo.all(from m in Message, order_by: m.inserted_at)
     render conn, "index.html"
   end
 

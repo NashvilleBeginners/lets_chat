@@ -53,7 +53,6 @@ import socket from "./socket"
   })
 
   channel.on("new_message", resp => {
-    console.log($msgContainer)
     renderNewMessage($msgContainer, resp)
   })
 
@@ -66,8 +65,5 @@ import socket from "./socket"
              `
     $el.appendChild(template)
   }
-
-
-
 
 }).call(this);
