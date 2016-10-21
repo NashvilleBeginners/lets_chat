@@ -6,9 +6,29 @@ header, main, footer {
   padding-left: 300px;
 }
 
+.messages {
+  height: 80vh;
+  overflow: scroll;
+  padding-bottom: 30px;
+}
+
 .container {
   width: 100%;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+#chat-input {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  .input-field {
+    margin: 0;
+
+    input {
+      margin: 0;
+    }
+  }
 }
 

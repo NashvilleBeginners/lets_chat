@@ -6,9 +6,6 @@ import {Location} from '@angular/common';
     template: `
       <ul id="nav-mobile" class="side-nav fixed">
         <h2>Hello, {{username}}</h2>
-        <li>
-          <a routerLink="/rooms/lobby" routeLinkActive="active">Lobby</a>
-        </li>
         <li *ngFor="let room of rooms">
           <a routerLink="/rooms/{{room}}" routerLinkActive="active">{{room}}</a>
         </li>

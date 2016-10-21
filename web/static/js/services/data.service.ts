@@ -2,37 +2,57 @@ import { Injectable } from '@angular/core';
 import 'rxjs/Rx';
 import { Subject }    from 'rxjs/Subject';
 
-export interface RoomDetails {
+export interface IRoomDetails {
     messages: Subject<string>,
     messageCount: Subject<number>
 }
 
-export interface RoomData {
-    [channelId: string]: RoomDetails
+export interface IRoomData {
+    [channelId: string]: IRoomDetails
+}
+
+class RoomDetails implements IRoomDetails {
+    messages: Subject<[string]>;
+    messageCount: Subject<number>;
+
+    constructor() {
+        this.messages = new Subject<[string]>();
+        this.messageCount = new Subject<number>();
+    }
 }
 
 @Injectable()
 export class DataService {
-    roomData: RoomData;
+    private roomData: IRoomData;
     public username: Subject<string>;
     public rooms: Subject<[string]>;
 
     constructor() {
         this.rooms = new Subject<[string]>();
-        this.roomData = {};
         this.username = new Subject<string>();
+        this.roomData = {};
     }
 
     public receiveRooms(rooms: [string]) {
         this.rooms.next(rooms);
     }
 
+    public getRoom(channelId) {
+        if(!this.roomData[channelId]) {
+            this.roomData[channelId] = new RoomDetails();
+        }
+
+        return this.roomData[channelId];
+    }
+
     public receiveMessage(channelId: string, message: string) {
-        this.roomData[channelId].messages.next(message);
+        let room = this.getRoom(channelId);
+        room.messages.next(message);
     }
 
     public setMessageCount(channelId: string, count: number) {
-        this.roomData[channelId].messageCount.next(count);
+        let room = this.getRoom(channelId);
+        room.messageCount.next(count);
     }
 
     public receiveUser(username: string) {

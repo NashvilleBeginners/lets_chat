@@ -2,7 +2,7 @@ defmodule LetsChat.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "room:*", LetsChat.RoomChannel
+  channel "rooms:*", LetsChat.RoomChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
